@@ -1,0 +1,12 @@
+﻿<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ObjectName="AccessFile"
+  DTS:DTSID="{3B9D4E52-5208-4BF5-9495-C16A8108C956}"
+  DTS:CreationName="OLEDB">
+  <DTS:ObjectData>
+    <DTS:ConnectionManager
+      DTS:ConnectRetryCount="1"
+      DTS:ConnectRetryInterval="5"
+      DTS:ConnectionString="Data Source=C:\Users\98912\Desktop\ttt.accdb;Provider=Microsoft.ACE.OLEDB.12.0;Persist Security Info=False;OLE DB Services=0;" />
+  </DTS:ObjectData>
+</DTS:ConnectionManager>

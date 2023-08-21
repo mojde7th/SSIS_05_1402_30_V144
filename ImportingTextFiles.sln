@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33723.286
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{C9674DCB-5085-4A16-B785-4C70DD1589BD}") = "ImportingTextFiles", "ImportingTextFiles\ImportingTextFiles.dtproj", "{57648FC1-0A42-4023-A633-06F8724820F5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Development|Default = Development|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{57648FC1-0A42-4023-A633-06F8724820F5}.Development|Default.ActiveCfg = Development
+		{57648FC1-0A42-4023-A633-06F8724820F5}.Development|Default.Build.0 = Development
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B71210A9-6FE2-46DB-A9E9-C21854D2E7CA}
+	EndGlobalSection
+EndGlobal

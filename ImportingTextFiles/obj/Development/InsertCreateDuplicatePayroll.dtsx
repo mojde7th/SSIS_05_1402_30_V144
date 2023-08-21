@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="7/18/2023 8:52:21 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DESKTOP-D1T6CSI"
+  DTS:CreatorName="DESKTOP-D1T6CSI\98912"
+  DTS:DTSID="{4BAB5057-58AD-4651-A5B0-28680E7F1EAD}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5131.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="InsertCreateDuplicatePayroll"
+  DTS:PackageType="5"
+  DTS:VersionBuild="4"
+  DTS:VersionGUID="{E6025ACB-90FB-4F76-87C5-F37E2978B5DF}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:PackageParameters>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{7AFC124C-4BB2-4056-A7EA-0F2FCC7078FD}"
+      DTS:ObjectName="month">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">140203</DTS:Property>
+    </DTS:PackageParameter>
+  </DTS:PackageParameters>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\InsertintoDuplicate"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{9cb59bc6-1435-49b7-b9df-53cc0e76a8b9}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="InsertintoDuplicate"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{1999F4C4-6C70-4967-8D7C-3237A0036E76}"
+          SQLTask:SqlStatementSource="DECLARE @sqlStatement2 NVARCHAR(MAX);&#xA;&#xA;-- Set the month parameter&#xA;DECLARE @month VARCHAR(15) =?;&#xA;&#xA;SET @sqlStatement2 = N'&#xA;INSERT INTO [dbo].[DuplicatePayrollCodes_' + @month + N'] (&#xA;    [RowId],&#xA;    [RegNo],&#xA;    [SystemCode],&#xA;    [M01],&#xA;    [M02],&#xA;    [M03],&#xA;    [M04],&#xA;    [M05],&#xA;    [M06],&#xA;    [M07],&#xA;    [M08],&#xA;    [M09],&#xA;    [M10],&#xA;    [M11],&#xA;    [M12]&#xA;)&#xA;SELECT&#xA;    N'''',&#xA;    [RegNo],&#xA;    [SystemCode],&#xA;    CASE RIGHT(' + CHAR(39) + @month + CHAR(39) + N', 2)&#xA;        WHEN N''01'' THEN [payrollcode]&#xA;        ELSE N'''' &#xA;    END,&#xA;    CASE RIGHT(' + CHAR(39) + @month + CHAR(39) + N', 2)&#xA;        WHEN N''02'' THEN [payrollcode]&#xA;        ELSE N'''' &#xA;    END,&#xA;    CASE RIGHT(' + CHAR(39) + @month + CHAR(39) + N', 2)&#xA;        WHEN N''03'' THEN [payrollcode]&#xA;        ELSE N'''' &#xA;    END,&#xA;    CASE RIGHT(' + CHAR(39) + @month + CHAR(39) + N', 2)&#xA;        WHEN N''04'' THEN [payrollcode]&#xA;        ELSE N'''' &#xA;    END,&#xA;    CASE RIGHT(' + CHAR(39) + @month + CHAR(39) + N', 2)&#xA;        WHEN N''05'' THEN [payrollcode]&#xA;        ELSE N'''' &#xA;    END,&#xA;    CASE RIGHT(' + CHAR(39) + @month + CHAR(39) + N', 2)&#xA;        WHEN N''06'' THEN [payrollcode]&#xA;        ELSE N'''' &#xA;    END,&#xA;    CASE RIGHT(' + CHAR(39) + @month + CHAR(39) + N', 2)&#xA;        WHEN N''07'' THEN [payrollcode]&#xA;        ELSE N'''' &#xA;    END,&#xA;    CASE RIGHT(' + CHAR(39) + @month + CHAR(39) + N', 2)&#xA;        WHEN N''08'' THEN [payrollcode]&#xA;        ELSE N'''' &#xA;    END,&#xA;    CASE RIGHT(' + CHAR(39) + @month + CHAR(39) + N', 2)&#xA;        WHEN N''09'' THEN [payrollcode]&#xA;        ELSE N'''' &#xA;    END,&#xA;    CASE RIGHT(' + CHAR(39) + @month + CHAR(39) + N', 2)&#xA;        WHEN N''10'' THEN [payrollcode]&#xA;        ELSE N'''' &#xA;    END,&#xA;    CASE RIGHT(' + CHAR(39) + @month + CHAR(39) + N', 2)&#xA;        WHEN N''11'' THEN [payrollcode]&#xA;        ELSE N'''' &#xA;    END,&#xA;    CASE RIGHT(' + CHAR(39) + @month + CHAR(39) + N', 2)&#xA;        WHEN N''12'' THEN [payrollcode]&#xA;        ELSE N'''' &#xA;    END&#xA;FROM [dbo].[_' + @month + N'_SW_FinalFI]&#xA;WHERE regno IN (&#xA;    SELECT regno&#xA;    FROM [dbo].[_' + @month + N'_SW_FinalFI]&#xA;    WHERE [1001-کد ملی] IN (&#xA;        SELECT [1001-کد ملی]&#xA;        FROM [dbo].[_' + @month + N'_SW_FinalFI]&#xA;        WHERE [isDeleted] = 0&#xA;        GROUP BY [1001-کد ملی]&#xA;        HAVING COUNT([1001-کد ملی]) &gt; 1&#xA;    ) AND [6626-حقوق پایه] IS NULL  &#xA;)&#xA; &#xA;AND [6626-حقوق پایه] IS NOT NULL;&#xA;&#xA; &#xA;';&#xA;&#xA;EXECUTE sp_executesql @sqlStatement2;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="$Package::month"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="170,42"
+          Id="Package\InsertintoDuplicate"
+          TopLeft="341,108" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

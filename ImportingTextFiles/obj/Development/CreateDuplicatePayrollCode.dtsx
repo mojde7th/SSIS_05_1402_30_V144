@@ -1,0 +1,218 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="7/17/2023 1:43:17 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DESKTOP-D1T6CSI"
+  DTS:CreatorName="DESKTOP-D1T6CSI\98912"
+  DTS:DTSID="{723C2A54-79D4-4C55-8863-B5CCF569F2C2}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5131.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="CreateDuplicatePayrollCode"
+  DTS:PackageType="5"
+  DTS:VersionBuild="33"
+  DTS:VersionGUID="{8BA3A28C-EDC9-471A-AA0A-7D410B5253AB}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:PackageParameters>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{5ADEA2E1-08D5-495D-816B-3E4AB162CD0F}"
+      DTS:ObjectName="month">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">140204</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{9B309E92-E856-45F8-BA14-5EE63A97D1E8}"
+      DTS:ObjectName="prevmonth">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">140203</DTS:Property>
+    </DTS:PackageParameter>
+  </DTS:PackageParameters>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Execute SQL Task"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{09D6CB77-7CBE-40CF-B192-EF5DB3716140}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Execute SQL Task"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{1999F4C4-6C70-4967-8D7C-3237A0036E76}"
+          SQLTask:SqlStatementSource="DECLARE @sqlStatement1 NVARCHAR(MAX);&#xA;&#xA;-- Set the month parameter&#xA;DECLARE @month VARCHAR(15) = ?;&#xA;&#xA;-- Create the table&#xA;SET @sqlStatement1 = N'&#xA;CREATE TABLE [dbo].[DuplicatePayrollCodes_' + @month + '] (&#xA;    [RowId] INT,&#xA;    [RegNo] NVARCHAR(50),&#xA;    [SystemCode] NVARCHAR(50),&#xA;    [M01] NVARCHAR(50),&#xA;    [M02] NVARCHAR(50),&#xA;    [M03] NVARCHAR(50),&#xA;    [M04] NVARCHAR(50),&#xA;    [M05] NVARCHAR(50),&#xA;    [M06] NVARCHAR(50),&#xA;    [M07] NVARCHAR(50),&#xA;    [M08] NVARCHAR(50),&#xA;    [M09] NVARCHAR(50),&#xA;    [M10] NVARCHAR(50),&#xA;    [M11] NVARCHAR(50),&#xA;    [M12] NVARCHAR(50)&#xA;);&#xA;&#xA;';&#xA;&#xA;EXECUTE sp_executesql @sqlStatement1;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="$Package::month"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Execute SQL Task 1"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{A2893D9F-9411-4786-BB09-4909FAE4B060}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Execute SQL Task 1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{1999F4C4-6C70-4967-8D7C-3237A0036E76}"
+          SQLTask:SqlStatementSource="DECLARE @sql NVARCHAR(MAX)&#xA;DECLARE @month NVARCHAR(10)&#xA;DECLARE @prevmonth NVARCHAR(10)&#xA;&#xA;SET @month = RIGHT(?, 4) &#xA;SET @prevmonth = RIGHT(?, 4)  &#xA;&#xA;SET @sql = N'EXEC [dbo].[RunOneMonth_ForDupl] @month, @prevmonth;'&#xA;&#xA;EXEC sp_executesql @sql, N'@month NVARCHAR(10), @prevmonth NVARCHAR(10)', @month, @prevmonth;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="$Package::month"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="1"
+            SQLTask:DtsVariableName="$Package::prevmonth"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\InsertintoDuplicate"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{6527BCDA-2954-4C05-ADDB-98C98B24DE19}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="InsertintoDuplicate"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{1999F4C4-6C70-4967-8D7C-3237A0036E76}"
+          SQLTask:SqlStatementSource="DECLARE @sqlStatement2 NVARCHAR(MAX);&#xA;&#xA;-- Set the month parameter&#xA;DECLARE @month VARCHAR(15) =?;&#xA;&#xA;SET @sqlStatement2 = N'&#xA;INSERT INTO [dbo].[DuplicatePayrollCodes_' + @month + N'] (&#xA;    [RowId],&#xA;    [RegNo],&#xA;    [SystemCode],&#xA;    [M01],&#xA;    [M02],&#xA;    [M03],&#xA;    [M04],&#xA;    [M05],&#xA;    [M06],&#xA;    [M07],&#xA;    [M08],&#xA;    [M09],&#xA;    [M10],&#xA;    [M11],&#xA;    [M12]&#xA;)&#xA;SELECT&#xA;    N'''',&#xA;    [RegNo],&#xA;    [SystemCode],&#xA;    CASE RIGHT(' + CHAR(39) + @month + CHAR(39) + N', 2)&#xA;        WHEN N''01'' THEN [payrollcode]&#xA;        ELSE N'''' &#xA;    END,&#xA;    CASE RIGHT(' + CHAR(39) + @month + CHAR(39) + N', 2)&#xA;        WHEN N''02'' THEN [payrollcode]&#xA;        ELSE N'''' &#xA;    END,&#xA;    CASE RIGHT(' + CHAR(39) + @month + CHAR(39) + N', 2)&#xA;        WHEN N''03'' THEN [payrollcode]&#xA;        ELSE N'''' &#xA;    END,&#xA;    CASE RIGHT(' + CHAR(39) + @month + CHAR(39) + N', 2)&#xA;        WHEN N''04'' THEN [payrollcode]&#xA;        ELSE N'''' &#xA;    END,&#xA;    CASE RIGHT(' + CHAR(39) + @month + CHAR(39) + N', 2)&#xA;        WHEN N''05'' THEN [payrollcode]&#xA;        ELSE N'''' &#xA;    END,&#xA;    CASE RIGHT(' + CHAR(39) + @month + CHAR(39) + N', 2)&#xA;        WHEN N''06'' THEN [payrollcode]&#xA;        ELSE N'''' &#xA;    END,&#xA;    CASE RIGHT(' + CHAR(39) + @month + CHAR(39) + N', 2)&#xA;        WHEN N''07'' THEN [payrollcode]&#xA;        ELSE N'''' &#xA;    END,&#xA;    CASE RIGHT(' + CHAR(39) + @month + CHAR(39) + N', 2)&#xA;        WHEN N''08'' THEN [payrollcode]&#xA;        ELSE N'''' &#xA;    END,&#xA;    CASE RIGHT(' + CHAR(39) + @month + CHAR(39) + N', 2)&#xA;        WHEN N''09'' THEN [payrollcode]&#xA;        ELSE N'''' &#xA;    END,&#xA;    CASE RIGHT(' + CHAR(39) + @month + CHAR(39) + N', 2)&#xA;        WHEN N''10'' THEN [payrollcode]&#xA;        ELSE N'''' &#xA;    END,&#xA;    CASE RIGHT(' + CHAR(39) + @month + CHAR(39) + N', 2)&#xA;        WHEN N''11'' THEN [payrollcode]&#xA;        ELSE N'''' &#xA;    END,&#xA;    CASE RIGHT(' + CHAR(39) + @month + CHAR(39) + N', 2)&#xA;        WHEN N''12'' THEN [payrollcode]&#xA;        ELSE N'''' &#xA;    END&#xA;FROM [dbo].[_' + @month + N'_SW_FinalFI]&#xA;WHERE regno IN (&#xA;    SELECT regno&#xA;    FROM [dbo].[_' + @month + N'_SW_FinalFI]&#xA;    WHERE [1001-کد ملی] IN (&#xA;        SELECT [1001-کد ملی]&#xA;        FROM [dbo].[_' + @month + N'_SW_FinalFI]&#xA;        WHERE [isDeleted] = 0&#xA;        GROUP BY [1001-کد ملی]&#xA;        HAVING COUNT([1001-کد ملی]) &gt; 1&#xA;    ) AND [6626-حقوق پایه] IS NULL  &#xA;)&#xA; &#xA;AND [6626-حقوق پایه] IS NOT NULL;&#xA;&#xA; &#xA;';&#xA;&#xA;EXECUTE sp_executesql @sqlStatement2;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="$Package::month"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{BB08B525-21BA-46D3-BA6F-34F40B45610D}"
+      DTS:From="Package\Execute SQL Task"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Execute SQL Task 1" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{49F1133C-5B6E-4F77-9C94-B08F1BBE8D5E}"
+      DTS:From="Package\Execute SQL Task 1"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\InsertintoDuplicate" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="170,42"
+          Id="Package\Execute SQL Task"
+          TopLeft="363,65" />
+        <NodeLayout
+          Size="179,42"
+          Id="Package\Execute SQL Task 1"
+          TopLeft="353,147" />
+        <NodeLayout
+          Size="170,42"
+          Id="Package\InsertintoDuplicate"
+          TopLeft="349,239" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="445.25,107">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,40"
+              Start="0,0"
+              End="0,32.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,32.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="442.5,189">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-8.5,50"
+              Start="0,0"
+              End="-8.5,42.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,21" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,21"
+                    Point2="0,25"
+                    Point3="-4,25" />
+                  <mssgle:LineSegment
+                    End="-4.5,25" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-4.5,25"
+                    Point2="-8.5,25"
+                    Point3="-8.5,29" />
+                  <mssgle:LineSegment
+                    End="-8.5,42.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
